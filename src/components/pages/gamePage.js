@@ -23,7 +23,15 @@ const GamePage = () => {
     }, [audio]);
 
     const togglePause = () => {
-        setIsPaused(prevState => !prevState);
+        setIsPaused(prevState => {
+            const newPausedState = !prevState;
+            if (newPausedState) {
+                audio.pause();
+            } else {
+                audio.play().catch(error => console.error('Müzik çalınırken bir hata oluştu:', error));
+            }
+            return newPausedState;
+        });
     };
 
     return (

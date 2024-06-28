@@ -22,10 +22,12 @@ const Game = ({
     const [obstacles, setObstacles] = useState([]);
     const [score, setScore] = useState(0);
     const playerRef = useRef(null);
-    const obstacleSpeed = initialObstacleSpeed; // Tüm obstacle'ların hızı
-    const obstacleGenerationSpeed = initialObstacleGenerationSpeed; //ms
     const maxHealth = initialMaxHealth;
+    const [obstacleSpeed, setObstacleSpeed] = useState(initialObstacleSpeed);
+    const [obstacleGenerationSpeed, setObstacleGenerationSpeed] = useState(initialObstacleGenerationSpeed);
+ 
 
+    
     const winPoint = () => {
         const newScore = parseInt(score) + winPrize;
         localStorage.setItem('score', newScore); // localStorage'a yeni score'u kaydet
@@ -174,68 +176,84 @@ const Game = ({
 
 
 
-    useEffect(() => {
-        if (isPaused) return;
-        const createObstacle = () => {
-            const directions = ['leftToRight', 'rightToLeft', 'topToBottom', 'bottomToTop'];
-            const randomDirection = directions[Math.floor(Math.random() * directions.length)];
-            let newLeft, newTop;
+// createObstacle fonksiyonu, engel oluşturma işlemini gerçekleştirir
+const createObstacle = () => {
+    const directions = ['leftToRight', 'rightToLeft', 'topToBottom', 'bottomToTop'];
+    const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+    let newLeft, newTop;
 
-            switch (randomDirection) {
-                case 'leftToRight':
-                    newLeft = '0%';
-                    newTop = 'calc(50% - 25px)';
-                    break;
-                case 'rightToLeft':
-                    newLeft = '100%';
-                    newTop = 'calc(50% - 25px)';
-                    break;
-                case 'topToBottom':
-                    newLeft = 'calc(50% - 25px)';
-                    newTop = '0%';
-                    break;
-                case 'bottomToTop':
-                    newLeft = 'calc(50% - 25px)';
-                    newTop = '100%';
-                    break;
-                default:
-                    break;
-            }
+    switch (randomDirection) {
+      case 'leftToRight':
+        newLeft = '0%';
+        newTop = 'calc(50% - 25px)';
+        break;
+      case 'rightToLeft':
+        newLeft = '100%';
+        newTop = 'calc(50% - 25px)';
+        break;
+      case 'topToBottom':
+        newLeft = 'calc(50% - 25px)';
+        newTop = '0%';
+        break;
+      case 'bottomToTop':
+        newLeft = 'calc(50% - 25px)';
+        newTop = '100%';
+        break;
+      default:
+        break;
+    }
 
-            const names = [
-                { name: 'up', src: upImg },
-                { name: 'down', src: downImg },
-                { name: 'left', src: leftImg },
-                { name: 'right', src: rightImg },
-                { name: 'not up', src: notUpImg },
-                { name: 'not down', src: notDownImg },
-                { name: 'not left', src: notLeftImg },
-                { name: 'not right', src: notRightImg },
-            ];
-            const randomNameObject = names[Math.floor(Math.random() * names.length)];
+    const names = [
+      { name: 'up', src: upImg },
+      { name: 'down', src: downImg },
+      { name: 'left', src: leftImg },
+      { name: 'right', src: rightImg },
+      { name: 'not up', src: notUpImg },
+      { name: 'not down', src: notDownImg },
+      { name: 'not left', src: notLeftImg },
+      { name: 'not right', src: notRightImg },
+    ];
+    const randomNameObject = names[Math.floor(Math.random() * names.length)];
 
-            setObstacles((prevObstacles) => [
-                ...prevObstacles,
-                {
-                    id: Date.now() + Math.random(),
-                    top: newTop,
-                    left: newLeft,
-                    direction: randomDirection,
-                    speed: obstacleSpeed,
-                    visible: true,
-                    ref: React.createRef(),
-                    name: randomNameObject.name,
-                    src: randomNameObject.src,
-                    collisionChecker: [false, false], // Ensure this is initialized properly
-                },
-            ]);
+    setObstacles((prevObstacles) => [
+      ...prevObstacles,
+      {
+        id: Date.now() + Math.random(),
+        top: newTop,
+        left: newLeft,
+        direction: randomDirection,
+        speed: obstacleSpeed,
+        visible: true,
+        ref: React.createRef(),
+        name: randomNameObject.name,
+        src: randomNameObject.src,
+        collisionChecker: [false, false],
+      },
+    ]);
 
-        };
+    // Her engel oluşturulduğunda generationSpeed'i azalt
+    if(obstacleGenerationSpeed > 600){
+        setObstacleGenerationSpeed(prevSpeed => Math.max(prevSpeed - prevSpeed/10, 600));
+        console.log(obstacleGenerationSpeed)
+    }
+   
+  };
 
-        const intervalId = setInterval(createObstacle, obstacleGenerationSpeed); // Her 2 saniyede bir yeni obstacle oluştur
+  const startInterval = (generationSpeed) => {
+    return setInterval(() => {
+      createObstacle();
+    }, generationSpeed);
+  };
 
-        return () => clearInterval(intervalId);
-    }, [isPaused]);
+  useEffect(() => {
+    if (isPaused) return;
+
+    let intervalId = startInterval(obstacleGenerationSpeed);
+
+    return () => clearInterval(intervalId); // Cleanup fonksiyonu
+  }, [isPaused, obstacleGenerationSpeed]);
+  
+      
 
     useEffect(() => {
         if (isPaused) return;
