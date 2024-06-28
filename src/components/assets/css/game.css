@@ -1,0 +1,97 @@
+.button-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.leave-button {
+    position: relative;
+    color: #eee;
+    padding: 0.5em 1.5em;
+    min-width: 5rem;
+    font-size: 18px;
+    border-radius: 0.5em;
+    background: #212121;
+    border: 1px solid #212121;
+    transition: 0.3s;
+    box-shadow: 6px 6px 12px #000, -6px -6px 12px #2f2f2f;
+    cursor: pointer;
+    z-index: 10000;
+    text-align: center;
+    user-select: none;
+}
+
+
+.leave-button:hover {
+    background: #333;
+    border: 1px solid #333;
+    box-shadow: 4px 4px 8px #000, -4px -4px 8px #2f2f2f;
+}
+
+.leave-button:active {
+    background: #444;
+    border: 1px solid #444;
+    box-shadow: inset 4px 4px 8px #000, inset -4px -4px 8px #2f2f2f;
+}
+
+
+.game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.player {
+    background-color: #555;
+    height: 100px;
+    width: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    outline: none;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.player-shooting-range {
+    height: 300px;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    background: rgba(96, 109, 188, 0.2);
+    /* Transparan mavi arkaplan */
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    /* Transparan kırmızı sınır */
+    transform: translate(-50%, -50%);
+    position: fixed;
+    border-radius: 50%;
+    /* Daha düzgün bir daire için 100%'den 50%'ye */
+    pointer-events: none;
+    /* Oyuncunun bu alanın üzerine tıklamasını engellemek için */
+}
+
+
+.obstacle {
+    height: 100px;
+    width: 100px;
+    position: relative;
+}
+
+.obstacle-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
