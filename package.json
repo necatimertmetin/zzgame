@@ -1,7 +1,7 @@
 {
   "name": "zzgame",
   "version": "0.1.0",
-  "homepage": "https://necatimertmetin.github.io/zz-game",
+  "homepage": "https://necatimertmetin.github.io/zzgame",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
