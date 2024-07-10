@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/zz-game/static/css/main.ecebedb0.css",
+    "main.js": "/zz-game/static/js/main.7bb47c28.js",
+    "static/js/453.f6b92e6f.chunk.js": "/zz-game/static/js/453.f6b92e6f.chunk.js",
+    "static/media/music.mp3": "/zz-game/static/media/music.9bf436678c4a926718eb.mp3",
+    "static/media/logo.svg": "/zz-game/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/zz-game/index.html",
+    "main.ecebedb0.css.map": "/zz-game/static/css/main.ecebedb0.css.map",
+    "main.7bb47c28.js.map": "/zz-game/static/js/main.7bb47c28.js.map",
+    "453.f6b92e6f.chunk.js.map": "/zz-game/static/js/453.f6b92e6f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ecebedb0.css",
+    "static/js/main.7bb47c28.js"
+  ]
+}
